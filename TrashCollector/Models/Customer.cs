@@ -13,22 +13,22 @@ namespace TrashCollector.Models
         public int CustomerId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-         
-        public string PickUp { get; set; }
-        public DateTime PicKupDate  { get; set; }
-        public  string  StreetAddress { get; set; }
-        public  string  City { get; set; }
-        public string State { get; set; }
-        public double Zipcode { get; set; }
+
+        public string StreetAddress { get; set; }
+        public string CityName { get; set; }
+        public string StateName { get; set; }
+        public int ZipCode { get; set; }
         public double Balance { get; set; }
-        public DateTime SuspendedStart { get; set; }
-        public DateTime SuspendedEnd { get; set; }
 
-
+        public string WeeklyPickupDay { get; set; }
+        public bool PickupCompleted { get; set; }
+        public string OneTimePickupDate { get; set; }
+        public string SuspendPickupStart { get; set; }
+        public string SuspendPickupStop { get; set; }
 
         [ForeignKey("ApplicationUser")]
         public string ApplicationId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
+    }
 }
-}
-  
+
