@@ -14,7 +14,7 @@ namespace TrashCollector.Controllers
     {
 
        public  ApplicationDbContext db;
-        CustomersController()
+        public CustomersController()
         {
             db = new ApplicationDbContext();
         }
@@ -55,7 +55,7 @@ namespace TrashCollector.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Details", "Customers", new { id = customer.CustomerId});
             }
-            catch
+            catch(Exception)
             {
                 return View();
             }
@@ -65,6 +65,10 @@ namespace TrashCollector.Controllers
         public ActionResult Edit(int id)
         {
             Customer customer = db.Customers.Where(c => c.CustomerId == id).SingleOrDefault();
+            if (customer.CustomerId == 0)
+            {
+                db.Customers.Add(customer);
+            }
             return View(customer);
         }
 
@@ -90,7 +94,7 @@ namespace TrashCollector.Controllers
                 return RedirectToAction("Details", "Customers", new { id = editCustomer.CustomerId });
              
             }
-            catch
+            catch(Exception)
             {
                 return View();
             }
@@ -109,12 +113,12 @@ namespace TrashCollector.Controllers
             try
             {
                 // TODO: Add delete logic here
-                db.Customers.Find(id);
+                db.Customers.Remove(db.Customers.Find(id)); ;
                 db.SaveChanges();
                 return RedirectToAction("Index");
                
             }
-            catch
+            catch(Exception)
             {
                 return View();
             }

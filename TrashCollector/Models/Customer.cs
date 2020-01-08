@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -20,6 +21,7 @@ namespace TrashCollector.Models
         public int ZipCode { get; set; }
         public double Balance { get; set; }
 
+        [DisplayName("Select your pickup day")]
         public string WeeklyPickupDay { get; set; }
         public bool PickupCompleted { get; set; }
         public string OneTimePickupDate { get; set; }
