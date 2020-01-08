@@ -21,8 +21,8 @@ namespace TrashCollector.Controllers
         {
             var myId = User.Identity.GetUserId();
             Employee employee = db.Employees.Where(e => e.ApplicationId == myId).SingleOrDefault();
-            var customersInMyArea = db.Customers.Where(c => c.ZipCode == employee.ZipCode && c.WeeklyPickupDay == DateTime.Today.DayOfWeek.ToString() && c.PickupCompleted == false);
-            return View(customersInMyArea);
+            var customersInMyArea = db.Customers.Where(c => c.ZipCode == employee.ZipCode && c.WeeklyPickupDay == DateTime.Today.DayOfWeek.ToString() && c.PickupCompleted == false).ToList();
+            return View(customersInMyArea);  
         }
     
 
