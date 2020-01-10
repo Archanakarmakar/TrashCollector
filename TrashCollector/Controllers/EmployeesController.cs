@@ -19,9 +19,13 @@ namespace TrashCollector.Controllers
         }
         public ActionResult Index()
         {
-            var myId = User.Identity.GetUserId();
-            Employee employee = db.Employees.Where(e => e.ApplicationId == myId).SingleOrDefault();
+           var userId = User.Identity.GetUserId();
+            var employee = db.Employees.Where(e => e.ApplicationId == userId).FirstOrDefault();
             var customersInMyArea = db.Customers.Where(c => c.ZipCode == employee.ZipCode && c.WeeklyPickupDay == DateTime.Today.DayOfWeek.ToString() && c.PickupCompleted == false).ToList();
+            // var employeeZip = employee.ZipCode;
+            // var customersInZip = db.Customers.Where(c => c.ZipCode == employee.ZipCode).ToList();
+            // var customersInZipFiltered = customersInZip.Where(c => c.WeeklyPickupDay == DateTime.Today.DayOfWeek.ToString()).ToList();
+           // var customersInMyArea = db.Customers.Where(c => c.ZipCode == employee.ZipCode && c.WeeklyPickupDay == DateTime.Today.DayOfWeek.ToString() && c.PickupCompleted == false).ToList();
             return View(customersInMyArea);  
         }
     
@@ -87,7 +91,22 @@ namespace TrashCollector.Controllers
                 return View();
             }
         }
-
+        // GET: Customer/Update Status
+        public ActionResult UpdatePickupStatus(int id)
+        {
+            Customer customer = db.Customers.Where(c => c.CustomerId == id).SingleOrDefault();
+            return View(customer);
+        }
+        // POST: Customer/Update Status
+        [HttpPost]
+        public ActionResult UpdatePickupStatus(Customer customer)
+        {
+            var editCustomer = db.Customers.Find(customer.CustomerId);
+            editCustomer.PickupCompleted = true;
+            editCustomer.Balance += 20.0;
+            db.SaveChanges();
+            return RedirectToAction("Index", "Employees");
+        } 
         // GET: Employees/Delete/5
         public ActionResult Delete(int id)
         {
