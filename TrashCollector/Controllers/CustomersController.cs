@@ -88,6 +88,7 @@ namespace TrashCollector.Controllers
                 editCustomer.ZipCode = customer.ZipCode;
                 editCustomer.OneTimePickupDate = customer.OneTimePickupDate;
                 editCustomer.WeeklyPickupDay = customer.WeeklyPickupDay;
+                editCustomer.PickupCompleted = customer.PickupCompleted;
                 editCustomer.SuspendPickupStart = customer.SuspendPickupStart;
                 editCustomer.SuspendPickupStop = customer.SuspendPickupStop;
                 db.SaveChanges();
