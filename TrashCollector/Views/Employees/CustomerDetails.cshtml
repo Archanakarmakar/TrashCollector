@@ -1,4 +1,4 @@
-﻿@model  TrashCollector.Models.Customer
+﻿@model TrashCollector.Models.Customer
 @{
     ViewBag.Title = "CustomerDetails";
 }
@@ -13,18 +13,17 @@
     #map {
         width: 100%;
         height: 400px;
-        background-color: grey;
+        background-color: forestgreen;
     }
 </style>
 
 <h2>CustomerDetails</h2>
 
-<div id="map"></div>
+<div CustomerId = "map"></div>
 <script>
     function initMap(response) {
         var address = { lat: response.data.results[0].geometry.location.lat, lng: response.data.results[0].geometry.location.lng };
-        var map = new google.maps.Map(
-            document.getElementById('map'), { zoom: 15, center: address });
+        var map = new google.maps.Map(document.getElementById('map'), { zoom: 15, center: address });
         var marker = new google.maps.Marker({position: address, map: map});
     }
     function geocode() {
@@ -32,7 +31,7 @@
             axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
                 params: {
                     address: location,
-                    key: 'AIzaSyAHhOYZS8GEETrewX1CpMB0fODTfsWeRDk'
+                    key: 'AIzaSyBV3XpLRFCP8odCTEN7VtRj4BYvsOJKILY'
                 }
             })
                 .then(function (response) {
@@ -44,7 +43,10 @@
                     console.log(error)
                 })
     }
+    var x = geocode();
 </script>
+
+<img src="https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyBV3XpLRFCP8odCTEN7VtRj4BYvsOJKILY" />
 
 <div>
     <h4>Customer</h4>
@@ -122,10 +124,8 @@
     @Html.AntiForgeryToken()
 
     <div class="form-actions no-color">
-        <input type="submit" value="UpdatePickupStatus" class="btn btn-default" /> |
+        <input type="submit" value="CustomerDetails" class="btn btn-default" /> |
         @Html.ActionLink("Back to List", "Index")
     </div>
 }
-    <p>
-        @Html.ActionLink("Back to List", "Index")
-    </p>
+

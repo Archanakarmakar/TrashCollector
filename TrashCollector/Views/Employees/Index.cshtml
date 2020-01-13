@@ -52,12 +52,13 @@
    @* <td>
         @Html.DisplayFor(modelItem => item.ApplicationId)
     </td>*@
-    <td>
-        @Html.ActionLink("Edit", "Edit", new { id = item.CustomerId }) |
-        @Html.ActionLink("Details", "Details", new { id = item.CustomerId }) |
-        @Html.ActionLink("Delete", "Delete", new { id = item.CustomerId })
-        @Html.ActionLink("Update Pickup Confirmation", "UpdatePickupStatus", new { id = item.CustomerId })
-    </td>
+<td>
+    @Html.ActionLink("Edit", "Edit", new { id = item.CustomerId }) |
+    @Html.ActionLink("Details", "Details", new { id = item.CustomerId }) |
+    @Html.ActionLink("Delete", "Delete", new { id = item.CustomerId })|
+    @Html.ActionLink("Update Pickup Confirmation", "UpdatePickupStatus", new { id = item.CustomerId })|
+    @Html.ActionLink("CustomerDetails", "CustomerDetails", new { id = item.CustomerId })
+</td>
 </tr>
 }
 
