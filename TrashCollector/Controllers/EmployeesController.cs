@@ -10,15 +10,20 @@ namespace TrashCollector.Controllers
 {
     public class EmployeesController : Controller
     {
+        string[] daysOfWeek;
+
         ApplicationDbContext db;
         // GET: Employees
 
         public EmployeesController()
         {
             db = new ApplicationDbContext();
+            daysOfWeek = new string[7] { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
         }
         public ActionResult Index()
         {
+            DateTime today = DateTime.Today;
+            string dayOfWeek = today.DayOfWeek.ToString();
             var userId = User.Identity.GetUserId();
             var employee = db.Employees.Where(e => e.ApplicationId == userId).FirstOrDefault();
             var customersInMyArea = db.Customers.Where(c => c.ZipCode == employee.ZipCode && c.WeeklyPickupDay == DateTime.Today.DayOfWeek.ToString()).ToList();
@@ -46,6 +51,8 @@ namespace TrashCollector.Controllers
         {
             try
             {
+                DateTime today = DateTime.Today;
+                string dayOfWeek = today.DayOfWeek.ToString();
                 // TODO: Add insert logic here
                 string currentUserId = User.Identity.GetUserId();
                 employee.ApplicationId = currentUserId;
@@ -97,6 +104,8 @@ namespace TrashCollector.Controllers
         [HttpPost]
         public ActionResult UpdatePickupStatus(Customer customer, int id)
         {
+            DateTime today = DateTime.Today;
+            string dayOfWeek = today.DayOfWeek.ToString();
             var editCustomer = db.Customers.Where(c=>c.CustomerId==id).SingleOrDefault();
             if (editCustomer.PickupCompleted == true)
             {
@@ -113,9 +122,15 @@ namespace TrashCollector.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index","Employees");
             }
-            
+            ;
         }
-        
+        public ActionResult CustomerDetails(int id)
+        {
+            Customer customer = db.Customers.FirstOrDefault(c => c.CustomerId == id);
+            string address = customer.StreetAddress + " " + customer.CityName + " " + customer.StateName;
+            ViewBag.Address = address;
+            return View(customer);
+        }
         // GET: Employees/Delete/5
         public ActionResult Delete(int id)
         {
