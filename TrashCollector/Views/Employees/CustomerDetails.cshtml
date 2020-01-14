@@ -5,49 +5,24 @@
 
 <h2>CustomerDetails</h2>
 
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHhOYZS8GEETrewX1CpMB0fODTfsWeRDk&callback=geocode">
-</script>
 <style>
+    /* Always set the map height explicitly to define the size of the div
+        * element that contains the map. */
     #map {
-        width: 100%;
-        height: 400px;
-        background-color: forestgreen;
+        height: 100%;
+    }
+    /* Optional: Makes the sample page fill the window. */
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
     }
 </style>
 
-<h2>CustomerDetails</h2>
 
-<div CustomerId = "map"></div>
-<script>
-    function initMap(response) {
-        var address = { lat: response.data.results[0].geometry.location.lat, lng: response.data.results[0].geometry.location.lng };
-        var map = new google.maps.Map(document.getElementById('map'), { zoom: 15, center: address });
-        var marker = new google.maps.Marker({position: address, map: map});
-    }
-    function geocode() {
-        var location = '@ViewBag.Address'
-            axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
-                params: {
-                    address: location,
-                    key: 'AIzaSyBV3XpLRFCP8odCTEN7VtRj4BYvsOJKILY'
-                }
-            })
-                .then(function (response) {
-                    //Log Full Response
-                    console.log(response);
-                    initMap(response);
-                })
-                .catch(function (error) {
-                    console.log(error)
-                })
-    }
-    var x = geocode();
-</script>
+<h2>ConfirmStatusUpdate</h2>
 
-<img src="https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyBV3XpLRFCP8odCTEN7VtRj4BYvsOJKILY" />
-
+<h3>Did you pickup the trash? For realz, yo?</h3>
 <div>
     <h4>Customer</h4>
     <hr />
@@ -100,32 +75,33 @@
             @Html.DisplayFor(model => model.ZipCode)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.OneTimePickupDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.OneTimePickupDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.WeeklyPickupDay)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.WeeklyPickupDay)
-        </dd>
-
     </dl>
-</div>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+    <div id="map" style="height:400px;width:100%;"></div>
+    <script>
+        // Initialize and add the map
+        function initMap() {
+            // The location of Uluru
+            var wisconsin = { lat: 24.891752 , lng: -98.4375};
+            // The map, centered at Uluru
+            var map = new google.maps.Map(
+                document.getElementById('map'), { zoom: 4, center:wisconsin });
+            // The marker, positioned at Uluru
+            var marker = new google.maps.Marker({ position: wisconsin, map: map });
+        }
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBV3XpLRFCP8odCTEN7VtRj4BYvsOJKILY&callback=initMap">
+    </script>
+   
 
-    <div class="form-actions no-color">
-        <input type="submit" value="CustomerDetails" class="btn btn-default" /> |
-        @Html.ActionLink("Back to List", "Index")
-    </div>
-}
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="CustomerDetails" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
 
